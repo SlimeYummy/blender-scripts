@@ -27,3 +27,11 @@ def ease_func(mode: str, t: float) -> float:
         case 'circleIn': return 1 - math.sqrt(1 - t * t)
         case 'circleOut': return math.sqrt(1 - pow(t - 1, 2))
         case _: raise Exception(f'Unknown ease mode: {mode}')
+
+
+def clamp01(x: float) -> float:
+    return max(0, min(1, x))
+
+
+def clamp01_int(x: float) -> int:
+    return int(max(0, min(1, x)))

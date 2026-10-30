@@ -75,6 +75,19 @@ def find_fcurve_by_id(
     return None
 
 
+def find_fcurves_by_ids(
+    action: bpy.types.Action,
+    fcurve_ids: list[str]
+):
+    fcurves = []
+    for id in fcurve_ids:
+        fcurve = find_fcurve_by_id(action, id)
+        if fcurve is None:
+            raise Exception(f'Cannot find fcurve with id "{id}"')
+        fcurves.append(fcurve)
+    return fcurves
+
+
 def get_selected_fcurves():
     fcurves = None
     for window in bpy.context.window_manager.windows:
@@ -111,3 +124,36 @@ def search_fcurve(
         if callback(keyframe):
             return keyframe
     return None
+
+
+def find_fingers_fcurves(
+    action: bpy.types.Action,
+    list_idx = ['1', '2', '3'],
+    list_lr = ['l', 'r'],
+    list_finger = ['pinky', 'ring', 'middle', 'index', 'thumb'],
+    list_transform = ['location', 'rotation_euler', 'scale'],
+    list_axis = ['x', 'y', 'z'],
+):
+    names = []
+    for idx in list_idx:
+        for lr in list_lr:
+            for finger in list_finger:
+                for transform in list_transform:
+                    for axis in list_axis:
+                        names.append(f'pose.bones["c_{finger}{idx}.{lr}"].{transform}.{axis}')
+    return find_fcurves_by_ids(action, names)
+
+
+def new_fcurve(action, group, data_path, index):
+    fcurve= action.fcurves.new(data_path=data_path, index=index, action_group=group)
+    fcurve.keyframe_points.insert(0, 0, options={'FAST'})
+    fcurve.color_mode = "CUSTOM"
+    fcurve.color = (0.4, 0.4, 0.4)
+    return fcurve
+
+
+def find_action_slot(action, slot_name):
+	for slot in action.slots:
+		if slot.name_display == slot_name:
+			return slot
+	return None
