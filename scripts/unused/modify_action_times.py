@@ -3,7 +3,7 @@ import bpy
 from math_utils import near_int
 
 
-cfg_scale = 0.6
+cfg_scale = 0.5
 
 
 def cfg_mapper(frame):
