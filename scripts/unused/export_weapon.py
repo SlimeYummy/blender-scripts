@@ -8,13 +8,11 @@ import custom_utils as cu
 
 importlib.reload(cu)
 
-# start_frame = 0
-# finish_frame = 46
-# duration = (finish_frame - start_frame) / 60
-
 print('======================================')
 
-re_action = re.compile(r"Axe_(\w+)(_edit|_bake|_pre)\d?")
+fps = bpy.context.scene.render.fps / bpy.context.scene.render.fps_base
+
+re_action = re.compile(r"Axe_(\w+)(_edit|_#edit|_bake|_#bake|_pre)\d?")
 
 waepon_obj = bpy.data.objects.get('AxeArmature')
 waepon_joint = waepon_obj.pose.bones.get('Root')
@@ -38,25 +36,26 @@ for raw_frame in range(meta.raw_start, meta.raw_finish + 1):
     bpy.context.scene.frame_set(raw_frame)
 
     p = waepon_joint.matrix.translation
+    print(p)
     json_pos.append({
-        "t": frame / 60,
+        "t": frame / fps,
         "v": [p.x, p.z, -p.y]
     })
 
     r = waepon_joint.matrix.to_quaternion()
     json_rot.append({
-        "t": frame / 60,
+        "t": frame / fps,
         "v": [r.x, r.z, -r.y, r.w]
     })
 bpy.context.scene.frame_set(saved_frame)
 
-path = f"D:/project/G1/PointAssets/Animations/GirlAttack/{out_name}.json"
+path = f"D:/project/G1/PointAssets/Girl/{out_name}.wm-json"
 pathlib.Path(path).parent.mkdir(parents=True, exist_ok=True)
 print(path)
-print(meta.frame_map)
+# print(meta.frame_map)
 
 with open(path, "w", encoding="utf-8") as file:
-    duration = meta.duration / 60
+    duration = meta.duration / fps
     json.dump([
         { "name": "Pos:Axe", "type": "float3", "duration": duration, "data": json_pos},
         { "name": "Rot:Axe", "type": "quaternion", "duration": duration, "data": json_rot},
