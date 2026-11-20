@@ -2,7 +2,7 @@ import bpy
 from mathutils import Vector
 
 
-cfg_target = 'AxeArmature'
+cfg_target = 'AxeArmatureIK'
 
 cfg_center_offset = Vector((-0.025, -0.056, 0))
 

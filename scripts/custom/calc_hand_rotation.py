@@ -3,7 +3,7 @@ import math
 from mathutils import Euler, Vector
 
 
-cfg_target = 'AxeArmature'
+cfg_target = 'AxeArmatureIK'
 
 cfg_left_diff = Euler((-math.pi, 0, math.pi / 2), 'XYZ').to_quaternion()
 cfg_right_diff = Euler((-math.pi, 0, -math.pi / 2), 'XYZ').to_quaternion()
