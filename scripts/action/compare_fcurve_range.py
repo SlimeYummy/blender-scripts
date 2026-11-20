@@ -2,17 +2,17 @@ import bpy
 import math
 from action_utils import make_fcurve_id, find_fcurve_by_id, get_selected_fcurves
 
-cfg_action1 = 'Attack_1_2_#pre'
-cfg_fcurve1 = 'c_root_master.x'
-cfg_frame1 = [None, None]
+cfg_action1 = 'Attack_04A_#edit2*'
+cfg_fcurve1 = 'c_foot_ik.l'
+cfg_frame1 = [0, 86]
 
-cfg_action2 = 'Attack_1_1_#pre'
-cfg_fcurve2 = 'c_root_master.x'
-cfg_frame2 = [None, None]
+cfg_action2 = 'Attack_04A_#edit1*'
+cfg_fcurve2 = 'c_foot_ik.l'
+cfg_frame2 = [0, 86]
 
 cfg_types = [
     'location',
-    'rotation_euler',
+    # 'rotation_euler',
     # 'quaternion',
     # 'scale',
 ]
